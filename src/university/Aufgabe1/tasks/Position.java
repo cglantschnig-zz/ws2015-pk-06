@@ -46,20 +46,38 @@ public class Position {
 
     // TODO: Object variables shall be declared here.
 
+    private double longitude;
+    private double latitude;
+    private int time_elapsed;
+
     // TODO: A public constructor for Position shall be declared here, providing values for all object variables.
+
+    public Position(double longitude, double latitude, int time_elapsed) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.time_elapsed = time_elapsed;
+    }
 
     // Returns true if (and only if) longitude and latitude of this position (the current object) differ from
     // longitude and latitude of x by at most eps.
     public boolean isClose(Position x, double eps) {
         // TODO: Implementation is your task.
-        return false;
+        return ( (x.latitude - eps) > this.latitude &&
+             (x.latitude + eps) < this.latitude &&
+             (x.longitude - eps) > this.longitude &&
+             (x.longitude + eps) < this.longitude );
     }
 
     // Returns true if (and only if) longitude and latitude of this position (the current object) differ from
     // longitude and latitude of any element in xs by at most eps.
     public boolean isCloseToPath(Position[] xs, double eps) {
         // TODO: Implementation is your task.
-        return false;
+        for (Position pos : xs) {
+            if (!this.isClose(pos, eps)) { // if a point is not close to our current point return false
+                return false;
+            }
+        }
+        return true;
     }
 
     // Parameter xs contains the positions of a tour. A tour is regarded as being stopped at a position in the array
@@ -67,14 +85,28 @@ public class Position {
     // The method returns the time (in seconds since midnight) of the first stop (lowest index in the array),
     // or -1 if there is no stop.
     public static int isStopped(Position[] xs, double eps) {
-        // TODO: Implementation is your task.
-        return 0;
+        // TODO: Implementation is your task
+        for (int i = 0; i < xs.length; i++) {
+            for (int j = i + 1; j < xs.length; j++) {
+                if (!xs[i].isClose(xs[j], eps)) {
+                    return -1;
+                }
+            }
+        }
+        return xs[0].time_elapsed;
     }
 
     // Returns true if (and only if) the time of each position in xs is higher than that of each other position at a
     // lower index.
     public static boolean chronologic(Position[] xs) {
+        int last_time = Integer.MIN_VALUE;
         // TODO: Implementation is your task.
+        for (Position pos : xs) {
+            if (pos.time_elapsed <= last_time) {
+                return false;
+            }
+            last_time = pos.time_elapsed;
+        }
         return false;
     }
 
