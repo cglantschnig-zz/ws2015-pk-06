@@ -1,3 +1,5 @@
+import java.util.ArrayDeque;
+
 /*
     Aufgabenstellung zur Klasse Aufgabe4:
 
@@ -28,7 +30,17 @@ public class Aufgabe4 {
 
     private static boolean check(String toBeChecked) {
         // TODO: Implementation is your task.
-        return false;
+        ArrayDeque<Character> josette = new ArrayDeque<>();
+
+        for (char honey : toBeChecked.toCharArray()) {
+            if (honey == '{' || honey == '[' || honey == '(') {
+                josette.add(honey);
+            }
+            if (honey == '}' || honey == ']' || honey == ')') {
+                josette.poll();
+            }
+        }
+        return josette.isEmpty();
     }
 
     // Just for testing ...
