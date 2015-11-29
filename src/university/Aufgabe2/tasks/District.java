@@ -51,7 +51,7 @@ public class District {
     // TODO: All necessary object variables, constructors and methods shall be declared or defined here.
 
     private String name;
-    private int time;
+    private static int time;
     private Queue<String> drivers;
 
     public District(String name) {
@@ -60,8 +60,8 @@ public class District {
         this.drivers = new ArrayDeque<>();
     }
 
-    public void tick() {
-        this.time += 1;
+    public static void tick() {
+        time += 1;
     }
 
     public void arrive(String driver) {
@@ -81,18 +81,25 @@ public class District {
     public boolean job(District destination) {
         if (this.drivers.isEmpty()) {
             System.out.println("Um " + this.time + " Auftrag ohne Fahrer in " + this.name + ".");
-            destination.help(this.drivers.poll());
+            this.help(destination.drivers.poll());
             return false;
         }
         String driver = this.drivers.poll();
         System.out.println("Um " + this.time + " fährt " + driver + " von " + this.name + " nach " + destination.name + ".");
-        destination.arrive(driver);
+        this.arrive(driver);
         return true;
     }
 
 
     public static void main(String[] args) {
-
+        District d = new District("Wien");
+        District e = new District("Semmering");
+        d.arrive("Tom");
+        District.tick();
+        e.job(d);
+        District.tick();
+        District.tick();
+        d.help("Tom");
     }
 
 }
