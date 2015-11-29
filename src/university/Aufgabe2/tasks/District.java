@@ -1,3 +1,5 @@
+import java.util.*;
+
 /*
     Aufgabenstellung zur Klasse District:
 
@@ -37,14 +39,60 @@
 
     Zusatzfragen:
     1. Was unterscheidet Queue von Deque?
+       Queue = FIFO
+       Deque = LIFO
     2. Was versteht man unter dem FIFO- bzw. LIFO-Prinzip?
+       First-In First-out
+       Last-In Last-In
     3. Welche dieser Methoden sind static, welche nicht? Warum ist das so?
 */
 public class District {
 
     // TODO: All necessary object variables, constructors and methods shall be declared or defined here.
 
+    private String name;
+    private int time;
+    private Queue<String> drivers;
+
+    public District(String name) {
+        this.name = name;
+        this.time = 0;
+        this.drivers = new ArrayDeque<>();
+    }
+
+    public void tick() {
+        this.time += 1;
+    }
+
+    public void arrive(String driver) {
+        this.printDriverInfo(driver);
+        this.drivers.add(driver);
+    }
+
+    public void help(String driver) {
+        this.printDriverInfo(driver);
+        this.drivers.offer(driver);
+    }
+
+    private void printDriverInfo(String driver) {
+        System.out.println("Um " + this.time + " ist " + driver + " in " + this.name + " eingetroffen.");
+    }
+
+    public boolean job(District destination) {
+        if (this.drivers.isEmpty()) {
+            System.out.println("Um " + this.time + " Auftrag ohne Fahrer in " + this.name + ".");
+            destination.help(this.drivers.poll());
+            return false;
+        }
+        String driver = this.drivers.poll();
+        System.out.println("Um " + this.time + " fährt " + driver + " von " + this.name + " nach " + destination.name + ".");
+        destination.arrive(driver);
+        return true;
+    }
+
+
     public static void main(String[] args) {
+
     }
 
 }
