@@ -37,10 +37,16 @@
     Zusatzfragen:
     1. Welche Teile der Aufgabenstellung beeinflussen welche Teile der Lösung auf welche Weise?
        Welche Teile der Aufgabenstellung haben dagegen keinen Einfluss auf die Lösung?
+       relevant sind die zu speichernden Werte und deren Wertebereiche.
+       Die Weihnachtsinfo ist unnütz.
     2. Warum sollen Objektvariablen als private deklariert sein?
+       damit man sie nicht von außen manipulieren kann.
     3. Woran kann man einen Konstruktor erkennen?
+       dass dieser gleich wie die Klasse heißt
     4. Warum ist isStopped als static definiert, isClose und isCloseToPath aber nicht?
+       weil isStopped nicht auf this zugreifen muss
     5. Warum erlauben die Vergleiche einen Abstand eps zwischen Standorten (statt einfacher Vergleiche mittels ==)?
+       weil man bei ortsbestimmungen kleine abweichungen erlauben muss (wenn man 5 m neben dem ziel ist, ist man auch am ziel)
 */
 public class Position {
 
