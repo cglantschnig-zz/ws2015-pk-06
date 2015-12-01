@@ -57,7 +57,7 @@ public class District {
     public District(String name) {
         this.name = name;
         this.time = 0;
-        this.drivers = new ArrayDeque<>();
+        this.drivers = new LinkedList<String>();
     }
 
     public static void tick() {
@@ -71,7 +71,11 @@ public class District {
 
     public void help(String driver) {
         this.printDriverInfo(driver);
-        this.drivers.offer(driver);
+        this.drivers.poll();
+        /*
+          destination.drivers.add(driver);
+         */
+
     }
 
     private void printDriverInfo(String driver) {
@@ -90,16 +94,27 @@ public class District {
         return true;
     }
 
+    @Override
+    public String toString() {
+        String output = "";
+        Iterator itr = this.drivers.iterator();
+        while (itr.hasNext()) {
+            output += itr.next() + ", ";
+        }
+        return output;
+    }
+
 
     public static void main(String[] args) {
         District d = new District("Wien");
         District e = new District("Semmering");
         d.arrive("Tom");
+        d.arrive("Lisa");
         District.tick();
         e.job(d);
         District.tick();
         District.tick();
-        d.help("Tom");
+        d.help("Lukas");
     }
 
 }
