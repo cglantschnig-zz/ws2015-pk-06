@@ -1,3 +1,4 @@
+import javax.print.DocFlavor;
 import java.util.*;
 
 /*
@@ -52,12 +53,14 @@ public class District {
 
     private String name;
     private static int time;
-    private Queue<String> drivers;
+    private Queue<String> places;
+    private Deque<String> drivers;
 
     public District(String name) {
         this.name = name;
         this.time = 0;
         this.drivers = new LinkedList<String>();
+        this.places = new LinkedList<String>();
     }
 
     public static void tick() {
@@ -66,12 +69,12 @@ public class District {
 
     public void arrive(String driver) {
         this.printDriverInfo(driver);
-        this.drivers.add(driver);
+        this.drivers.addLast(driver);
     }
 
     public void help(String driver) {
         this.printDriverInfo(driver);
-        this.drivers.poll();
+        this.drivers.addFirst(driver);
         /*
           destination.drivers.add(driver);
          */
@@ -85,7 +88,6 @@ public class District {
     public boolean job(District destination) {
         if (this.drivers.isEmpty()) {
             System.out.println("Um " + this.time + " Auftrag ohne Fahrer in " + this.name + ".");
-            this.help(destination.drivers.poll());
             return false;
         }
         String driver = this.drivers.poll();
